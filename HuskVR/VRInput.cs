@@ -14,6 +14,17 @@ namespace HuskVR {
 		public static InputDevice LeftHand => leftHand ?? throw new Exception("Left Hand is null.");
 		public static InputDevice RightHand => rightHand ?? throw new Exception("Right Hand is null.");
 
+		public static bool IsRightHandTriggerDown {
+			get {
+				if(RightHand.TryGetFeatureValue(CommonUsages.triggerButton, out bool outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read triggerButton usage of Right Hand");
+					return false;
+				}
+			}
+		}
+
 		static List<InputDevice> inputDevices = null;
 		internal static void InitInput() {
 			MainPlugin.logger.LogMessage("Initializing input");
