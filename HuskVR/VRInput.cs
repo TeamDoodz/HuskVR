@@ -25,11 +25,17 @@ namespace HuskVR {
 			}
 		}
 
-		static List<InputDevice> inputDevices = null;
+		static List<InputDevice> inputDevices = new List<InputDevice>();
 		internal static void InitInput() {
 			MainPlugin.logger.LogMessage("Initializing input");
 
+			inputDevices = new List<InputDevice>();
 			InputDevices.GetDevices(inputDevices);
+
+			if(inputDevices == null) {
+				MainPlugin.logger.LogError("Failed to get input devices.");
+				return;
+			}
 
 			foreach(var device in inputDevices) {
 				MainPlugin.logger.LogInfo(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.characteristics));
