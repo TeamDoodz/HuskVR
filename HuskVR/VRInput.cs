@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using HuskVR.MonoBehaviours;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 
 namespace HuskVR {
@@ -42,6 +44,12 @@ namespace HuskVR {
 			}
 
 			InputDevices.deviceConnected += InitDevice;
+
+			SceneManager.activeSceneChanged += (Scene a, Scene b) => {
+				if(VRInputManager.Instance == null) {
+					new GameObject("VR Input Manager").AddComponent<VRInputManager>();
+				}
+			};
 
 			if(headset == null) MainPlugin.logger.LogWarning("Could not find headset. Make sure it exists and is connected to the system.");
 			if(leftHand == null) MainPlugin.logger.LogWarning("Could not find left hand. Make sure it exists and is connected to the system.");
