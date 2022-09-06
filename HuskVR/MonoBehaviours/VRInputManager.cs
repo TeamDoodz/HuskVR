@@ -15,6 +15,7 @@ namespace HuskVR.MonoBehaviours {
 			{
 				RocketLauncher rocketLauncher = GunControl.Instance.currentWeapon.GetComponent<RocketLauncher>();
 				if(rocketLauncher != null) {
+					if(rocketLauncher.cooldown > 0f) return;
 					if(!rocketLauncher.wid || rocketLauncher.wid.delay == 0f) {
 						rocketLauncher.Shoot();
 						return;
