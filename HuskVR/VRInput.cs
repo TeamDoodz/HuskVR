@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using HuskVR.MonoBehaviours;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Layouts;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 
 namespace HuskVR {
 	public static class VRInput {
-		private static UnityEngine.XR.InputDevice? headset;
-		private static UnityEngine.XR.InputDevice? leftHand;
-		private static UnityEngine.XR.InputDevice? rightHand;
+		private static InputDevice? headset;
+		private static InputDevice? leftHand;
+		private static InputDevice? rightHand;
 
-		public static UnityEngine.XR.InputDevice Headset => headset ?? throw new Exception("Headset is null.");
-		public static UnityEngine.XR.InputDevice LeftHand => leftHand ?? throw new Exception("Left Hand is null.");
-		public static UnityEngine.XR.InputDevice RightHand => rightHand ?? throw new Exception("Right Hand is null.");
+		public static InputDevice Headset => headset ?? throw new Exception("Headset is null.");
+		public static InputDevice LeftHand => leftHand ?? throw new Exception("Left Hand is null.");
+		public static InputDevice RightHand => rightHand ?? throw new Exception("Right Hand is null.");
 
-		public static bool IsRightHandTriggerDown {
+		public static bool IsFireDown { // this works fine
 			get {
-				if(RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool outp)) {
+				if(RightHand.TryGetFeatureValue(CommonUsages.triggerButton, out bool outp)) {
 					return outp;
 				} else {
 					MainPlugin.logger.LogWarning("Could not read triggerButton usage of Right Hand");
@@ -28,28 +26,34 @@ namespace HuskVR {
 				}
 			}
 		}
-		public static bool IsRightHandBDown {
+		public static bool IsAltFireDown { // this always returns false?????
 			get {
-				if(RightHand.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out bool outp)) {
+				if(RightHand.TryGetFeatureValue(CommonUsages.primaryButton, out bool outp)) {
 					return outp;
 				} else {
-					MainPlugin.logger.LogWarning("Could not read secondaryButton usage of Right Hand");
+					MainPlugin.logger.LogWarning("Could not read primaryButton usage of Right Hand");
 					return false;
 				}
 			}
 		}
 
-		static List<UnityEngine.XR.InputDevice> inputDevices = new List<UnityEngine.XR.InputDevice>();
+		static List<InputDevice> inputDevices = new List<UnityEngine.XR.InputDevice>();
 		internal static void InitInput() {
 			MainPlugin.logger.LogMessage("Initializing input");
 
-			inputDevices = new List<UnityEngine.XR.InputDevice>();
+			inputDevices = new List<InputDevice>();
 			InputDevices.GetDevices(inputDevices);
 
 			if(inputDevices == null) {
 				MainPlugin.logger.LogError("Failed to get input devices.");
 				return;
 			}
+
+			SceneManager.activeSceneChanged += (Scene a, Scene b) => {
+				if(VRInputManager.Instance == null) {
+					new GameObject("VR Input Manager").AddComponent<VRInputManager>();
+				}
+			};
 
 			foreach(var device in inputDevices) {
 				InitDevice(device);
@@ -62,8 +66,8 @@ namespace HuskVR {
 			if(rightHand == null) MainPlugin.logger.LogWarning("Could not find right hand. Make sure it exists and is connected to the system.");
 		}
 
-		private static void InitDevice(UnityEngine.XR.InputDevice device) {
-			MainPlugin.logger.LogInfo(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.characteristics));
+		private static void InitDevice(InputDevice device) {
+			MainPlugin.logger.LogMessage(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.characteristics));
 			if(device.characteristics.HasFlag(InputDeviceCharacteristics.HeadMounted)) {
 				headset = device;
 			} else if(device.characteristics.HasFlag(InputDeviceCharacteristics.Controller)) {
@@ -73,6 +77,22 @@ namespace HuskVR {
 				if(device.characteristics.HasFlag(InputDeviceCharacteristics.Left)) {
 					leftHand = device;
 				}
+			}
+			List<InputFeatureUsage> usages = new List<InputFeatureUsage>();
+			device.TryGetFeatureUsages(usages);
+			foreach(InputFeatureUsage usage in usages) {
+				MainPlugin.logger.LogInfo(usage.name);
+			}
+		}
+
+		public static void Trigger(this InputActionState state, bool started, bool canceled) {
+			if(started) {
+				state.IsPressed = true;
+				state.PerformedFrame = Time.frameCount;
+				state.PerformedTime = Time.time;
+			} else if(canceled) {
+				state.IsPressed = false;
+				state.CanceledFrame = Time.frameCount;
 			}
 		}
 	}
