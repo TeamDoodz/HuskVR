@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuskVR", "HuskVR\HuskVR.csproj", "{FC5A26BA-C9EB-47DA-B5F9-52F0012ECFDE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC5A26BA-C9EB-47DA-B5F9-52F0012ECFDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC5A26BA-C9EB-47DA-B5F9-52F0012ECFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC5A26BA-C9EB-47DA-B5F9-52F0012ECFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC5A26BA-C9EB-47DA-B5F9-52F0012ECFDE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {480818E2-89A3-47BC-8248-FC4919F3A958}
+	EndGlobalSection
+EndGlobal
