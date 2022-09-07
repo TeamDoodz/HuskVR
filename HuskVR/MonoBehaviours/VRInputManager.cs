@@ -14,6 +14,8 @@ namespace HuskVR.MonoBehaviours {
 		private bool changeFist = false;
 		private bool nextWeapon = false;
 		private bool prevWeapon = false;
+		private bool nextVariant = false;
+		private bool jump = false;
 
 		private float turnSpeed = 300f;
 
@@ -41,6 +43,14 @@ namespace HuskVR.MonoBehaviours {
 			if(VRInput.IsPrevWeaponDown != prevWeapon) {
 				prevWeapon = VRInput.IsPrevWeaponDown;
 				InputManager.Instance.InputSource.NextWeapon.Trigger(prevWeapon, !prevWeapon);
+			}
+			if(VRInput.IsSwitchVariantDown != nextVariant) {
+				nextVariant = VRInput.IsSwitchVariantDown;
+				InputManager.Instance.InputSource.ChangeVariation.Trigger(nextVariant, !nextVariant);
+			}
+			if(VRInput.IsJumpDown != jump) {
+				jump = VRInput.IsJumpDown;
+				InputManager.Instance.InputSource.Jump.Trigger(jump, !jump);
 			}
 			if(VRInput.IsTurnLeftDown) {
 				NewMovement.Instance.transform.Rotate(new Vector3(0f, -turnSpeed * Time.deltaTime, 0f));
