@@ -44,6 +44,62 @@ namespace HuskVR {
 				}
 			} 
 		}
+		public static bool IsPunchDown {
+			get {
+				if(!LeftHand.isValid) {
+					MainPlugin.logger.LogError("Left Hand is invalid.");
+					return false;
+				}
+				if(LeftHand.TryGetFeatureValue(CommonUsages.triggerButton, out bool outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read triggerButton usage of Left Hand");
+					return false;
+				}
+			}
+		}
+		public static bool IsSwitchFistDown {
+			get {
+				if(!LeftHand.isValid) {
+					MainPlugin.logger.LogError("Left Hand is invalid.");
+					return false;
+				}
+				if(LeftHand.TryGetFeatureValue(CommonUsages.gripButton, out bool outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read gripButton usage of Left Hand");
+					return false;
+				}
+			}
+		}
+		public static bool IsNextWeaponDown {
+			get {
+				if(!RightHand.isValid) {
+					MainPlugin.logger.LogError("Right Hand is invalid.");
+					return false;
+				}
+				if(RightHand.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 outp)) {
+					return outp.y >= 0.9f;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read primary2DAxisClick usage of Right Hand");
+					return false;
+				}
+			}
+		}
+		public static bool IsPrevWeaponDown {
+			get {
+				if(!RightHand.isValid) {
+					MainPlugin.logger.LogError("Right Hand is invalid.");
+					return false;
+				}
+				if(RightHand.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 outp)) {
+					return outp.y <= -0.9f;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read primary2DAxisClick usage of Right Hand");
+					return false;
+				}
+			}
+		}
 
 		static List<InputDevice> inputDevices = new List<InputDevice>();
 		internal static void InitInput() {
