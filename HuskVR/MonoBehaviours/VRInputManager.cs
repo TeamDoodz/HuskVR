@@ -15,7 +15,7 @@ namespace HuskVR.MonoBehaviours {
 		private bool nextWeapon = false;
 		private bool prevWeapon = false;
 
-		private float turnSpeed = 150f;
+		private float turnSpeed = 300f;
 
 		private void Update() {
 			if(VRInput.IsFireDown != fire1) {
