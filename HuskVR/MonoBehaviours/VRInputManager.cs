@@ -14,7 +14,6 @@ namespace HuskVR.MonoBehaviours {
 			if(VRInput.IsFireDown != fire1) {
 				fire1 = VRInput.IsFireDown;
 				InputManager.Instance.InputSource.Fire1.Trigger(fire1, !fire1);
-				MainPlugin.logger.LogInfo("fire");
 			}
 			if(VRInput.IsAltFireDown != fire2) {
 				fire2 = VRInput.IsAltFireDown;

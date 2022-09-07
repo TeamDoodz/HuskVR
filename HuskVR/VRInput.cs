@@ -16,8 +16,12 @@ namespace HuskVR {
 		public static InputDevice LeftHand => leftHand ?? throw new Exception("Left Hand is null.");
 		public static InputDevice RightHand => rightHand ?? throw new Exception("Right Hand is null.");
 
-		public static bool IsFireDown { // this works fine
+		public static bool IsFireDown {
 			get {
+				if(!RightHand.isValid) {
+					MainPlugin.logger.LogError("Right Hand is invalid.");
+					return false;
+				}
 				if(RightHand.TryGetFeatureValue(CommonUsages.triggerButton, out bool outp)) {
 					return outp;
 				} else {
@@ -26,18 +30,22 @@ namespace HuskVR {
 				}
 			}
 		}
-		public static bool IsAltFireDown { // this always returns false?????
+		public static bool IsAltFireDown {
 			get {
-				if(RightHand.TryGetFeatureValue(CommonUsages.primaryButton, out bool outp)) {
-					return outp;
-				} else {
-					MainPlugin.logger.LogWarning("Could not read primaryButton usage of Right Hand");
+				if(!RightHand.isValid) {
+					MainPlugin.logger.LogError("Right Hand is invalid.");
 					return false;
 				}
-			}
+				if(RightHand.TryGetFeatureValue(CommonUsages.gripButton, out bool outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read gripButton usage of Right Hand");
+					return false;
+				}
+			} 
 		}
 
-		static List<InputDevice> inputDevices = new List<UnityEngine.XR.InputDevice>();
+		static List<InputDevice> inputDevices = new List<InputDevice>();
 		internal static void InitInput() {
 			MainPlugin.logger.LogMessage("Initializing input");
 
