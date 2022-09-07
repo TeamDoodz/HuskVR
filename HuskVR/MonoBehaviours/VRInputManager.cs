@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace HuskVR.MonoBehaviours {
@@ -13,6 +14,8 @@ namespace HuskVR.MonoBehaviours {
 		private bool changeFist = false;
 		private bool nextWeapon = false;
 		private bool prevWeapon = false;
+
+		private float turnSpeed = 150f;
 
 		private void Update() {
 			if(VRInput.IsFireDown != fire1) {
@@ -38,6 +41,11 @@ namespace HuskVR.MonoBehaviours {
 			if(VRInput.IsPrevWeaponDown != prevWeapon) {
 				prevWeapon = VRInput.IsPrevWeaponDown;
 				InputManager.Instance.InputSource.NextWeapon.Trigger(prevWeapon, !prevWeapon);
+			}
+			if(VRInput.IsTurnLeftDown) {
+				NewMovement.Instance.transform.Rotate(new Vector3(0f, -turnSpeed * Time.deltaTime, 0f));
+			} else if(VRInput.IsTurnRightDown) {
+				NewMovement.Instance.transform.Rotate(new Vector3(0f, turnSpeed * Time.deltaTime, 0f));
 			}
 		}
 	}

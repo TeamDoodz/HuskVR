@@ -81,7 +81,7 @@ namespace HuskVR {
 				if(RightHand.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 outp)) {
 					return outp.y >= 0.9f;
 				} else {
-					MainPlugin.logger.LogWarning("Could not read primary2DAxisClick usage of Right Hand");
+					MainPlugin.logger.LogWarning("Could not read primary2DAxis usage of Right Hand");
 					return false;
 				}
 			}
@@ -95,8 +95,50 @@ namespace HuskVR {
 				if(RightHand.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 outp)) {
 					return outp.y <= -0.9f;
 				} else {
-					MainPlugin.logger.LogWarning("Could not read primary2DAxisClick usage of Right Hand");
+					MainPlugin.logger.LogWarning("Could not read primary2DAxis usage of Right Hand");
 					return false;
+				}
+			}
+		}
+		public static bool IsTurnLeftDown {
+			get {
+				if(!RightHand.isValid) {
+					MainPlugin.logger.LogError("Right Hand is invalid.");
+					return false;
+				}
+				if(RightHand.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 outp)) {
+					return outp.x <= -0.9f;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read primary2DAxis usage of Right Hand");
+					return false;
+				}
+			}
+		}
+		public static bool IsTurnRightDown {
+			get {
+				if(!RightHand.isValid) {
+					MainPlugin.logger.LogError("Right Hand is invalid.");
+					return false;
+				}
+				if(RightHand.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 outp)) {
+					return outp.x >= 0.9f;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read primary2DAxis usage of Right Hand");
+					return false;
+				}
+			}
+		}
+		public static Vector2 Move {
+			get {
+				if(!LeftHand.isValid) {
+					MainPlugin.logger.LogError("Left Hand is invalid.");
+					return Vector2.zero;
+				}
+				if(LeftHand.TryGetFeatureValue(CommonUsages.primary2DAxis, out Vector2 outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read primary2DAxis usage of Left Hand");
+					return Vector2.zero;
 				}
 			}
 		}
