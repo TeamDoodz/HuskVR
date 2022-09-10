@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using HuskVR.Patches;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -53,9 +54,9 @@ namespace HuskVR.MonoBehaviours {
 				InputManager.Instance.InputSource.Jump.Trigger(jump, !jump);
 			}
 			if(VRInput.IsTurnLeftDown) {
-				NewMovement.Instance.transform.Rotate(new Vector3(0f, -turnSpeed * Time.deltaTime, 0f));
+				VRTurnPatch.Offset += -turnSpeed * Time.deltaTime;
 			} else if(VRInput.IsTurnRightDown) {
-				NewMovement.Instance.transform.Rotate(new Vector3(0f, turnSpeed * Time.deltaTime, 0f));
+				VRTurnPatch.Offset += turnSpeed * Time.deltaTime;
 			}
 		}
 	}
