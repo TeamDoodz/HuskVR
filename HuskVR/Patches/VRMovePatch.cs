@@ -10,7 +10,7 @@ namespace HuskVR.Patches {
 		static bool Prefix(NewMovement __instance) {
 			Vector2 vector = Vector2.zero;
 			if(__instance.activated) {
-				vector = -VRInput.Move; // this is literally the only code i had to change, bruhhh
+				vector = VRInput.Move; // this is literally the only code i had to change, bruhhh
 				__instance.cc.movementHor = vector.x;
 				__instance.cc.movementVer = vector.y;
 				__instance.movementDirection = Vector3.ClampMagnitude(vector.x * __instance.transform.right + vector.y * __instance.transform.forward, 1f);
