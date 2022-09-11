@@ -45,7 +45,7 @@ namespace HuskVR.MonoBehaviours {
 			}
 			if(VRInput.IsPrevWeaponDown != prevWeapon) {
 				prevWeapon = VRInput.IsPrevWeaponDown;
-				InputManager.Instance.InputSource.NextWeapon.Trigger(prevWeapon, !prevWeapon);
+				InputManager.Instance.InputSource.PrevWeapon.Trigger(prevWeapon, !prevWeapon);
 			}
 			if(VRInput.IsSwitchVariantDown != nextVariant) {
 				nextVariant = VRInput.IsSwitchVariantDown;
