@@ -128,6 +128,34 @@ namespace HuskVR {
 				}
 			}
 		}
+		public static bool IsSlideDown {
+			get {
+				if(!LeftHand.isValid) {
+					MainPlugin.logger.LogError("Left Hand is invalid.");
+					return false;
+				}
+				if(LeftHand.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out bool outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read primary2DAxisClick usage of Left Hand");
+					return false;
+				}
+			}
+		}
+		public static bool IsDashDown {
+			get {
+				if(!LeftHand.isValid) {
+					MainPlugin.logger.LogError("Left Hand is invalid.");
+					return false;
+				}
+				if(LeftHand.TryGetFeatureValue(CommonUsages.primaryButton, out bool outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read primaryButton usage of Left Hand");
+					return false;
+				}
+			}
+		}
 		public static bool IsTurnLeftDown {
 			get {
 				if(!RightHand.isValid) {

@@ -17,6 +17,8 @@ namespace HuskVR.MonoBehaviours {
 		private bool prevWeapon = false;
 		private bool nextVariant = false;
 		private bool jump = false;
+		private bool slide = false;
+		private bool dash = false;
 
 		private float turnSpeed = 300f;
 
@@ -52,6 +54,14 @@ namespace HuskVR.MonoBehaviours {
 			if(VRInput.IsJumpDown != jump) {
 				jump = VRInput.IsJumpDown;
 				InputManager.Instance.InputSource.Jump.Trigger(jump, !jump);
+			}
+			if(VRInput.IsSlideDown != slide) {
+				slide = VRInput.IsSlideDown;
+				InputManager.Instance.InputSource.Slide.Trigger(slide, !slide);
+			}
+			if(VRInput.IsDashDown != dash) {
+				dash = VRInput.IsDashDown;
+				InputManager.Instance.InputSource.Dodge.Trigger(dash, !dash);
 			}
 			if(VRInput.IsTurnLeftDown) {
 				VRTurnPatch.Offset += -turnSpeed * Time.deltaTime;
