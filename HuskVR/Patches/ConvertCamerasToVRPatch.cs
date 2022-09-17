@@ -60,8 +60,6 @@ namespace HuskVR.Patches {
 			newCam.nearClipPlane = nearPlane;
 			newCam.farClipPlane = farPlane;
 
-			newCam.stereoTargetEye = StereoTargetEyeMask.Right; // this makes the hud/weapons more visible on flatscreen view
-
 			if(replaceFT) {
 				MainPlugin.logger.LogMessage($"Replacing autoaim");
 				var newFT = obj.AddComponent<CameraFrustumTargeter>();
