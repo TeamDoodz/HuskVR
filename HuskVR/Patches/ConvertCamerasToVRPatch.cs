@@ -41,6 +41,8 @@ namespace HuskVR.Patches {
 			CameraClearFlags clearFlags = cam.clearFlags;
 			int cullingMask = cam.cullingMask;
 			RenderTexture targetTexture = cam.targetTexture;
+			float nearPlane = cam.nearClipPlane;
+			float farPlane = cam.farClipPlane;
 
 			GameObject.Destroy(cam);
 
@@ -55,6 +57,8 @@ namespace HuskVR.Patches {
 			newCam.cullingMask = cullingMask;
 			newCam.targetTexture = targetTexture;
 			newCam.backgroundColor = Color.black; // this fixes weird jank in the main menu
+			newCam.nearClipPlane = nearPlane;
+			newCam.farClipPlane = farPlane;
 
 			if(replaceFT) {
 				MainPlugin.logger.LogMessage($"Replacing autoaim");
