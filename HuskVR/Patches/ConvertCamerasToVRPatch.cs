@@ -2,6 +2,7 @@
 using System.Collections;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace HuskVR.Patches {
 	[HarmonyPatch(typeof(CameraController), nameof(CameraController.Start))]
@@ -59,6 +60,8 @@ namespace HuskVR.Patches {
 			newCam.backgroundColor = Color.black; // this fixes weird jank in the main menu
 			newCam.nearClipPlane = nearPlane;
 			newCam.farClipPlane = farPlane;
+
+			UnityEngine.XR.XRSettings.gameViewRenderMode = GameViewRenderMode.RightEye;
 
 			if(replaceFT) {
 				MainPlugin.logger.LogMessage($"Replacing autoaim");
