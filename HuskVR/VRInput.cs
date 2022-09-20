@@ -198,6 +198,34 @@ namespace HuskVR {
 				}
 			}
 		}
+		public static Vector3 RightHandPosition {
+			get {
+				if(!RightHand.isValid) {
+					MainPlugin.logger.LogError("Right Hand is invalid.");
+					return Vector3.zero;
+				}
+				if(RightHand.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read devicePosition usage of Right Hand");
+					return Vector3.zero;
+				}
+			}
+		}
+		public static Vector3 HeadPosition {
+			get {
+				if(!Headset.isValid) {
+					MainPlugin.logger.LogError("Headset is invalid.");
+					return Vector3.zero;
+				}
+				if(Headset.TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 outp)) {
+					return outp;
+				} else {
+					MainPlugin.logger.LogWarning("Could not read devicePosition usage of Headset");
+					return Vector3.zero;
+				}
+			}
+		}
 
 		static List<InputDevice> inputDevices = new List<InputDevice>();
 		internal static void InitInput() {

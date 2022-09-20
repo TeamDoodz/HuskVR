@@ -20,6 +20,7 @@ namespace HuskVR {
 			new Harmony(GUID).PatchAll();
 
 			VRInput.InitInput();
+			VRUI.InitUI();
 
 			logger.LogMessage($"{Name} version {Version} loaded!");
 		}
