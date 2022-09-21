@@ -1,24 +1,35 @@
 ﻿using HuskVR.MonoBehaviours;
+using HuskVR.Patches;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace HuskVR {
 	public static class VRUI {
+		public static Camera UICam { get; private set; }
+
 		public static void InitUI() {
-			SceneManager.activeSceneChanged += (x,y) => SceneChanged();
+			SceneManager.activeSceneChanged += (x,y) => SceneChanged(y);
 		}
 
-		private static void SceneChanged() {
+		private static void SceneChanged(Scene after) {
+			CreateUICam();
 			foreach(var canvas in Object.FindObjectsOfType<Canvas>()) {
-				if(canvas.renderMode != RenderMode.ScreenSpaceOverlay) continue;
-				canvas.renderMode = RenderMode.WorldSpace;
-				canvas.gameObject.layer = 13; // always on top
-				canvas.gameObject.AddComponent<VRUICanvas>();
+				ConvertCanvas(canvas);
 			}
-			var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			Object.Destroy(obj.GetComponent<Collider>());
-			obj.transform.localScale = Vector3.one * 0.25f;
-			obj.AddComponent<ControllerTracked>();
+		}
+
+		private static void ConvertCanvas(Canvas canvas) {
+			if(canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
+			canvas.renderMode = RenderMode.WorldSpace;
+			canvas.gameObject.layer = 5; // ui
+			canvas.gameObject.AddComponent<VRUICanvas>();
+		}
+
+		private static void CreateUICam() {
+			UICam = new GameObject("UI Camera").AddComponent<Camera>();
+			UICam.cullingMask = LayerMask.GetMask(new string[] { "UI" });
+			UICam.clearFlags = CameraClearFlags.Depth;
+			UICam.depth = 1f;
 		}
 	}
 }
