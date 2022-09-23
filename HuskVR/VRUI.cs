@@ -14,15 +14,8 @@ namespace HuskVR {
 		private static void SceneChanged(Scene after) {
 			CreateUICam();
 			foreach(var canvas in Object.FindObjectsOfType<Canvas>()) {
-				ConvertCanvas(canvas);
+				VRUICanvas.ConvertCanvas(canvas);
 			}
-		}
-
-		private static void ConvertCanvas(Canvas canvas) {
-			if(canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
-			canvas.renderMode = RenderMode.WorldSpace;
-			canvas.gameObject.layer = 5; // ui
-			canvas.gameObject.AddComponent<VRUICanvas>();
 		}
 
 		private static void CreateUICam() {

@@ -32,5 +32,12 @@ namespace HuskVR.MonoBehaviours {
 			if(ShouldUpdatePos) UpdatePos(); else ResetPos();
 			transform.position = VRUI.UICam.transform.position + lastCamFwd;
 		}
+
+		public static void ConvertCanvas(Canvas canvas) {
+			if(canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
+			canvas.renderMode = RenderMode.WorldSpace;
+			canvas.gameObject.layer = 5; // ui
+			canvas.gameObject.AddComponent<VRUICanvas>();
+		}
 	}
 }
