@@ -10,8 +10,8 @@ namespace HuskVR.MonoBehaviours {
 
 		private Vector3 lastCamFwd = Vector3.zero;
 
-		private const float dist = 200f;
-		private static float scale = 0.25f;
+		private const float dist = 100f;
+		private static float scale = 0.0625f;
 
 		public void UpdatePos() {
 			lastCamFwd = VRUI.UICam.transform.forward * dist;
