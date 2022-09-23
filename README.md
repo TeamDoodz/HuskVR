@@ -2,6 +2,8 @@
 
 HuskVR is a modification for the early access first person shooter game ULTRAKILL that allows it to be played in VR.
 
+![The ferry at the end of 5-2 slowly rising](./assets/ferry.gif)
+
 ## Installation
 
 TODO
