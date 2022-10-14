@@ -1,7 +1,9 @@
 ﻿using HuskVR.MonoBehaviours;
 using HuskVR.Patches;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace HuskVR {
 	public static class VRUI {
@@ -23,6 +25,7 @@ namespace HuskVR {
 			UICam.cullingMask = LayerMask.GetMask(new string[] { "UI" });
 			UICam.clearFlags = CameraClearFlags.Depth;
 			UICam.depth = 1f;
+			UICam.gameObject.AddComponent<GazeUIInteraction>();
 		}
 	}
 }
