@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using UnityEngine;
 
 namespace HuskVR {
 	[BepInPlugin(GUID,Name,Version)]
@@ -23,6 +24,12 @@ namespace HuskVR {
 			VRUI.InitUI();
 
 			logger.LogMessage($"{Name} version {Version} loaded!");
+		}
+
+		private void Update() {
+			if(Input.GetKeyDown(KeyCode.F1)) {
+				UKUtils.HUDCam.enabled = !UKUtils.HUDCam.enabled;
+			}
 		}
 
 	}
