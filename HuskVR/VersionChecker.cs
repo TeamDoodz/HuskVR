@@ -10,6 +10,7 @@ namespace HuskVR {
 		const string VERSION_URI = "https://api.github.com/repos/TeamDoodz/HuskVR/tags";
 
 		public static Version LatestVersion { get; private set; }
+		public static bool IsOutdated => LatestVersion > MainPlugin.Version;
 
 		private static string Get(string uri) {
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
@@ -26,12 +27,19 @@ namespace HuskVR {
 		}
 
 		internal static void CheckVersion() {
-			VersionTag[] versions = JsonConvert.DeserializeObject<VersionTag[]>(Get(VERSION_URI));
-			if(versions.Length == 0) {
-				MainPlugin.logger.LogDebug("HuskVR has no public releases");
-			}
-			if(versions[0].Name > MainPlugin.Version) {
-				MainPlugin.logger.LogWarning($"HuskVR outdated. Current version: {MainPlugin.Version}; Latest version: {LatestVersion}");
+			try {
+				VersionTag[] versions = JsonConvert.DeserializeObject<VersionTag[]>(Get(VERSION_URI));
+				if(versions.Length == 0) {
+					MainPlugin.logger.LogDebug("HuskVR has no public releases");
+					LatestVersion = MainPlugin.Version;
+				}
+				LatestVersion = versions[0].Name;
+				if(versions[0].Name > MainPlugin.Version) {
+					MainPlugin.logger.LogWarning($"HuskVR outdated. Current version: {MainPlugin.Version}; Latest version: {LatestVersion}");
+				}
+			} catch(Exception e) {
+				MainPlugin.logger.LogError($"Error getting latest version: {e}");
+				LatestVersion = MainPlugin.Version;
 			}
 		}
 
