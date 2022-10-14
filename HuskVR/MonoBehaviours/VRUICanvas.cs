@@ -35,6 +35,7 @@ namespace HuskVR.MonoBehaviours {
 
 		public static void ConvertCanvas(Canvas canvas) {
 			if(canvas.renderMode != RenderMode.ScreenSpaceOverlay) return;
+			canvas.worldCamera = VRUI.UICam;
 			canvas.renderMode = RenderMode.WorldSpace;
 			canvas.gameObject.layer = 5; // ui
 			canvas.gameObject.AddComponent<VRUICanvas>();
