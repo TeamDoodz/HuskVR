@@ -10,7 +10,7 @@ namespace HuskVR.MonoBehaviours {
 
 		private Vector3 lastCamFwd = Vector3.zero;
 
-		private const float dist = 100f;
+		private const float dist = 50f;
 		private static float scale = 0.0625f;
 
 		public void UpdatePos() {
