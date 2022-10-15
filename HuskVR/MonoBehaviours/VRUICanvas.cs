@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace HuskVR.MonoBehaviours {
 	public class VRUICanvas : MonoBehaviour {
@@ -39,6 +40,23 @@ namespace HuskVR.MonoBehaviours {
 			canvas.renderMode = RenderMode.WorldSpace;
 			canvas.gameObject.layer = 5; // ui
 			canvas.gameObject.AddComponent<VRUICanvas>();
+
+			foreach(Transform child in canvas.transform) {
+				ConvertElement(child);
+			}
+		}
+
+		private static void ConvertElement(Transform element) {
+			if(element.GetComponent<Selectable>() is Selectable button) {
+				// ColorBlock is a value type which means in order to modify it we need this jank
+				var block = button.colors;
+				block.highlightedColor = Color.green;
+				button.colors = block;
+			}
+
+			foreach(Transform child in element) {
+				ConvertElement(child);
+			}
 		}
 	}
 }
