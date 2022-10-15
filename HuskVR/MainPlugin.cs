@@ -30,6 +30,7 @@ namespace HuskVR {
 
 			new Harmony(GUID).PatchAll();
 
+			VREnabler.EnableVR();
 			VRInput.InitInput();
 			InfoPanelInjector.Init();
 			VRUI.InitUI();
