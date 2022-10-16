@@ -64,9 +64,9 @@ namespace HuskVR.MonoBehaviours {
 				InputManager.Instance.InputSource.Dodge.Trigger(dash, !dash);
 			}
 			if(VRInput.IsTurnLeftDown) {
-				VRTurnPatch.Offset += -turnSpeed * Time.deltaTime;
+				VRCameraCorrectionPatch.Offset += -turnSpeed * Time.deltaTime;
 			} else if(VRInput.IsTurnRightDown) {
-				VRTurnPatch.Offset += turnSpeed * Time.deltaTime;
+				VRCameraCorrectionPatch.Offset += turnSpeed * Time.deltaTime;
 			}
 		}
 	}

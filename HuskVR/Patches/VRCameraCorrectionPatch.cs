@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HuskVR.Patches {
 	[HarmonyPatch]
-	public static class VRTurnPatch {
+	public static class VRCameraCorrectionPatch {
 
 		public static float Offset { get; set; } = 0f;
 
