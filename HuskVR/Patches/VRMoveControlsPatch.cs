@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace HuskVR.Patches {
 	[HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Update))]
-	static class VRMovePatch {
+	static class VRMoveControlsPatch {
 		//TODO: Use a transpiler instead, so that i dont have to copy-paste the entire method
 		static bool Prefix(NewMovement __instance) {
 			Vector2 vector = Vector2.zero;
