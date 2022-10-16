@@ -25,6 +25,7 @@ namespace HuskVR.Patches {
 		[HarmonyPatch(typeof(NewMovement), nameof(NewMovement.Update))]
 		[HarmonyPrefix]
 		static void Update(NewMovement __instance) {
+			if(__instance.dead) return;
 			__instance.transform.rotation = Quaternion.Euler(__instance.transform.rotation.eulerAngles.x, UKUtils.MainCam.transform.rotation.eulerAngles.y, __instance.transform.rotation.eulerAngles.z);
 			container.transform.rotation = Quaternion.Euler(0f, Offset, 0f);
 		}
