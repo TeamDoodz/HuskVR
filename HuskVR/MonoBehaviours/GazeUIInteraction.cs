@@ -51,8 +51,8 @@ namespace HuskVR.MonoBehaviours {
 			}
 
 			// Target is being activating
-			if(currentSelectable != null && (InputManager.Instance?.InputSource.Fire1.WasPerformedThisFrame ?? false)) {
-				if(clickHandler != null) {
+			if(currentSelectable != null && InputManager.Instance.InputSource.Fire1.IsPressed) {
+				if(clickHandler != null && (InputManager.Instance?.InputSource.Fire1.WasPerformedThisFrame ?? false)) {
 					clickHandler.OnPointerClick(pointerEvent);
 					Select(null, currentSelectable);
 				} else if(dragHandler != null) {
